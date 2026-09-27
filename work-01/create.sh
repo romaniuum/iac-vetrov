@@ -1,27 +1,19 @@
 #!/usr/bin/env bash
-# Практика 1, самостоятельная часть.
-# Поднимает стенд варианта 09 одной командой на пустом каталоге:
-# сеть, подсеть, группа безопасности и две машины на Debian 12.
-# Настройка nginx внутри машин в скрипт не входит — делается руками по SSH.
-#
-# Запуск из корня репозитория:  ./work-01/create.sh
-# Требуется: настроенный профиль yc, jq, ключ ~/.ssh/id_ed25519.pub
+
 set -euo pipefail
 
-# ===== Параметры варианта 09 =====
 PREFIX="vetrov-09"
 ZONE="ru-central1-d"
 CIDR="10.19.1.0/24"
 APP_PORT=8027
-DISK_SIZE=25                    # ГБ
+DISK_SIZE=25                   
 IMAGE_FAMILY="debian-12"
-WORD="cloudlab"                 # слово на странице (ставится руками, здесь — для подсказки)
-
+WORD="cloudlab"                 
 # ===== Параметры машин =====
-PLATFORM="standard-v3"          # Intel Ice Lake; v1/v2 в зоне ru-central1-d нет
+PLATFORM="standard-v3"          
 CORES=2
 CORE_FRACTION=20
-MEMORY=2                        # ГБ
+MEMORY=2                       
 SSH_KEY="$HOME/.ssh/id_ed25519.pub"
 VM_NAMES=("$PREFIX-app-1" "$PREFIX-app-2")
 
@@ -43,7 +35,6 @@ FOLDER_ID="$(yc config get folder-id 2>/dev/null || true)"
 [ -n "$FOLDER_ID" ] || die "в профиле yc не задан folder-id, выполните yc init"
 echo "Каталог: $FOLDER_ID, зона: $ZONE, префикс: $PREFIX"
 
-# Образ существует и помещается на диск нужного размера
 MIN_DISK_BYTES="$(yc compute image get-latest-from-family "$IMAGE_FAMILY" \
   --folder-id standard-images --format json | jq -r '.min_disk_size // 0')"
 [ "$MIN_DISK_BYTES" -le $((DISK_SIZE * 1024 * 1024 * 1024)) ] \
