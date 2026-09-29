@@ -1,0 +1,20 @@
+#cloud-config
+# Шаблон общий для веб-серверов и сервера приложения.
+# Подстановка: envsubst '${APP_PORT} ${WORD} ${SSH_KEY}'.
+# Никаких других $ИМЯ здесь быть не должно: yc раскрывает их сам (урок практики 2).
+users:
+  - name: student
+    groups: sudo
+    shell: /bin/bash
+    sudo: ['ALL=(ALL) NOPASSWD:ALL']
+    ssh_authorized_keys:
+      - ${SSH_KEY}
+package_update: true
+packages:
+  - nginx
+runcmd:
+  - sed -i 's/listen 80 default_server;/listen ${APP_PORT} default_server;/' /etc/nginx/sites-available/default
+  - sed -i 's/listen \[::\]:80 default_server;/listen [::]:${APP_PORT} default_server;/' /etc/nginx/sites-available/default
+  - bash -c 'echo "${WORD} on $(hostname)" > /var/www/html/index.nginx-debian.html'
+  - nginx -t
+  - systemctl restart nginx
