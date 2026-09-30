@@ -1,6 +1,4 @@
 # shellcheck shell=bash
-# Общие параметры стенда ДЗ 1. Подключается из create.sh, check.sh и destroy.sh.
-# Приоритет: аргумент командной строки > переменная окружения > умолчание варианта 09.
 
 PARAMS=(PREFIX ZONE_A ZONE_B CIDR_A CIDR_B APP_PORT WORD WEB_COUNT ENV_NAME)
 
@@ -55,7 +53,6 @@ USAGE
 
 load_params() {
   local p key val var
-  # 1-2. умолчание, если переменная окружения не задана
   for p in "${PARAMS[@]}"; do
     if [ -n "${!p:-}" ]; then
       SOURCE[$p]="окружение"
@@ -79,7 +76,6 @@ load_params() {
     SOURCE[$var]="аргумент"
   done
   validate_params
-  # дочерние сценарии (create.sh вызывает check.sh) получают те же значения
   export "${PARAMS[@]}"
   if [ "$PRINT_PARAMS" -eq 1 ]; then show_params; exit 0; fi
 }
@@ -112,7 +108,5 @@ need() {
   done
 }
 
-# Отбор «своих» ресурсов: по метке owner или по началу имени.
-# Загрузочные диски меток не получают, поэтому имя остаётся запасным признаком.
 # shellcheck disable=SC2016,SC2034 # $p — переменная jq; MINE_JQ используют check.sh и destroy.sh
 MINE_JQ='.[] | select(((.labels.owner // "") == $p) or ((.name // "") | startswith($p + "-")))'
