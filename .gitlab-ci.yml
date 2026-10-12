@@ -7,15 +7,36 @@ stages:
   - proverka
   - stend
 
+# не запускать, если менялась только документация
 shellcheck:
   stage: proverka
   image: koalaman/shellcheck-alpine:stable
+  rules:
+    - if: $CI_PIPELINE_SOURCE == "push"
+      changes:
+        - "**/*.sh"
+        - .gitlab-ci.yml
   script:
     - echo "Вариант 09, слово cloudlab"
     - shellcheck --version
     # commands.sh — журнал команд, не скрипт; -x чтобы проверялся params.sh
     - find . -name '*.sh' ! -path ./work-01/commands.sh -print
     - find . -name '*.sh' ! -path ./work-01/commands.sh -exec shellcheck -x {} +
+
+# проверка шаблонов cloud-init, relaxed — иначе ругается на длинные строки
+yamllint:
+  stage: proverka
+  image: alpine:3.20
+  rules:
+    - if: $CI_PIPELINE_SOURCE == "push"
+      changes:
+        - "**/*.yaml"
+        - .gitlab-ci.yml
+  script:
+    - echo "Проверка YAML, вариант 09, слово cloudlab"
+    - apk add --no-cache yamllint >/dev/null
+    - yamllint --version
+    - yamllint -d relaxed work-02/cloud-init.tpl.yaml hw-01/cloud-init.tpl.yaml
 
 # заготовка: yc и профиль с ключом из переменной
 .yc:
