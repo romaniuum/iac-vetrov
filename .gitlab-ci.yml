@@ -1,0 +1,16 @@
+# все задачи на моём раннере
+default:
+  tags:
+    - vetrov-09
+
+stages:
+  - proverka
+
+shellcheck:
+  stage: proverka
+  image: koalaman/shellcheck-alpine:stable
+  script:
+    - echo "Вариант 09, слово cloudlab"
+    - shellcheck --version
+    - find . -name '*.sh' -print
+    - find . -name '*.sh' -exec shellcheck {} +
