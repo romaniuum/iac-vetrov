@@ -15,6 +15,7 @@ command -v jq >/dev/null 2>&1 || { echo "ОШИБКА: не найдена ут�
 # delete_if_exists <группа команд yc> <имя>
 delete_if_exists() {
   local what="$1" name="$2"
+  # $what = "compute instance", в кавычках yc не поймёт
   # shellcheck disable=SC2086
   if yc $what get --name "$name" >/dev/null 2>&1; then
     yc $what delete --name "$name"

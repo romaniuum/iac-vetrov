@@ -39,6 +39,8 @@ yc vpc subnet create --name "$PREFIX-subnet-b" --network-name "$PREFIX-net" \
 echo "==> файл настройки из шаблона"
 SSH_KEY=$(cat ~/.ssh/id_ed25519.pub)
 export APP_PORT GREETING SSH_KEY
+# envsubst нужны сами имена переменных, поэтому одинарные кавычки
+# shellcheck disable=SC2016
 envsubst '${APP_PORT} ${GREETING} ${SSH_KEY}' \
   < "$DIR/cloud-init.tpl.yaml" > "$DIR/cloud-init.yaml"
 
@@ -53,7 +55,7 @@ for i in $(seq 1 "$VM_COUNT"); do
   idx=$(( (i - 1) % 2 ))
   EXTRA=()
   if [ "$i" -eq 1 ]; then
-    EXTRA=(--attach-disk disk-name="$PREFIX-data",device-name=data)
+    EXTRA=(--attach-disk "disk-name=$PREFIX-data,device-name=data")
   fi
   yc compute instance create \
     --name "$PREFIX-app-$i" \

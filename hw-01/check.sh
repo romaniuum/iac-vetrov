@@ -4,7 +4,7 @@
 set -uo pipefail
 
 DIR="$(cd "$(dirname "$0")" && pwd)"
-# shellcheck source=params.sh
+# shellcheck source-path=SCRIPTDIR source=params.sh
 source "$DIR/params.sh"
 load_params "$@"
 need yc jq curl ssh

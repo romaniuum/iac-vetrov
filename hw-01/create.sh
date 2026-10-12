@@ -5,7 +5,7 @@
 set -euo pipefail
 
 DIR="$(cd "$(dirname "$0")" && pwd)"
-# shellcheck source=params.sh
+# shellcheck source-path=SCRIPTDIR source=params.sh
 source "$DIR/params.sh"
 load_params "$@"
 show_params
@@ -30,6 +30,7 @@ step() { echo "==> $*"; }
 # не выдаётся за «нет ресурса»: печатаем её и останавливаемся.
 exists() {
   local err
+  # $1 = "compute instance", в кавычках yc не поймёт
   # shellcheck disable=SC2086
   if err=$(yc $1 get "$2" 2>&1 >/dev/null); then return 0; fi
   if grep -Eqi 'not[ _]?found' <<<"$err"; then return 1; fi

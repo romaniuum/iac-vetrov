@@ -4,6 +4,7 @@ set -euo pipefail
 PREFIX=vetrov-09
 
 ids() {
+  # $1 = "compute instance", в кавычках yc не поймёт
   # shellcheck disable=SC2086
   yc $1 list --format json \
     | jq -r --arg p "$PREFIX-" '.[] | select(.name | startswith($p)) | "\(.id) \(.name)"'
@@ -18,6 +19,7 @@ remove() {
   fi
   while read -r id name; do
     echo "==> удаляю $what $name"
+    # то же, что в ids()
     # shellcheck disable=SC2086
     yc $what delete "$id" </dev/null
   done <<< "$found"

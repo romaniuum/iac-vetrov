@@ -4,13 +4,14 @@
 set -euo pipefail
 
 DIR="$(cd "$(dirname "$0")" && pwd)"
-# shellcheck source=params.sh
+# shellcheck source-path=SCRIPTDIR source=params.sh
 source "$DIR/params.sh"
 load_params "$@"
 need yc jq
 
 # "id имя" всех своих ресурсов данного вида
 mine() {
+  # $1 = "compute instance", в кавычках yc не поймёт
   # shellcheck disable=SC2086
   yc $1 list --format json | jq -r --arg p "$PREFIX" "$MINE_JQ"' | "\(.id) \(.name // "-")"'
 }
@@ -24,6 +25,7 @@ remove() {
   fi
   while read -r id name; do
     echo "==> удаляю $kind $name"
+    # то же, что в mine()
     # shellcheck disable=SC2086
     yc $kind delete "$id" </dev/null >/dev/null
   done <<<"$found"

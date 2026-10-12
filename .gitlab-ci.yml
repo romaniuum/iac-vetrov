@@ -12,5 +12,6 @@ shellcheck:
   script:
     - echo "Вариант 09, слово cloudlab"
     - shellcheck --version
-    - find . -name '*.sh' -print
-    - find . -name '*.sh' -exec shellcheck {} +
+    # commands.sh — журнал команд, не скрипт; -x чтобы проверялся params.sh
+    - find . -name '*.sh' ! -path ./work-01/commands.sh -print
+    - find . -name '*.sh' ! -path ./work-01/commands.sh -exec shellcheck -x {} +

@@ -1,4 +1,5 @@
 #!/usr/bin/env bash
+# журнал команд из пр1, не скрипт (целиком не запускается), в shellcheck не проверяется
 
 export PREFIX=vetrov-09
 export ZONE=ru-central1-d
