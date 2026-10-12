@@ -2,7 +2,7 @@
 users:
   - name: student
     groups: sudo
-    shell: /bin/bash
+     shell: /bin/bash
     sudo: ['ALL=(ALL) NOPASSWD:ALL']
     ssh_authorized_keys:
       - ${SSH_KEY}
