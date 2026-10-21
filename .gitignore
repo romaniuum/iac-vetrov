@@ -8,3 +8,8 @@ work-02/cloud-init.yaml
 # служебное
 *.log
 *.tmp
+# состояние Terraform: содержит идентификаторы и секреты
+*.tfstate
+*.tfstate.*
+# скачанные провайдеры: восстанавливаются командой init
+.terraform/
