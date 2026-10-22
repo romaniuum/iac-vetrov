@@ -1,0 +1,19 @@
+#cloud-config
+users:
+  - name: student
+    groups: sudo
+    shell: /bin/bash
+    sudo: ['ALL=(ALL) NOPASSWD:ALL']
+    ssh_authorized_keys:
+      - ${ssh_key}
+packages:
+  - nginx
+  - apache2-utils
+runcmd:
+  - sed -i 's/listen 80 default_server;/listen ${app_port} default_server;/' /etc/nginx/sites-available/default
+  - sed -i 's/listen \[::\]:80 default_server;/listen [::]:${app_port} default_server;/' /etc/nginx/sites-available/default
+  - bash -c 'echo "${greeting} on $(hostname)" > /var/www/html/index.nginx-debian.html'
+  - htpasswd -bc /etc/nginx/.htpasswd student '${web_password}'
+  - sed -i 's|location / {|location / { auth_basic "closed"; auth_basic_user_file /etc/nginx/.htpasswd;|' /etc/nginx/sites-available/default
+  - nginx -t
+  - systemctl restart nginx

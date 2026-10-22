@@ -1,0 +1,10 @@
+prefix       = "vetrov-09"
+zone         = "ru-central1-d"
+subnet_cidr  = "10.19.1.0/24"
+app_port     = 8027
+disk_size    = 25
+vm_count     = 2
+image_family = "debian-12"
+greeting     = "cloudlab"
+env          = "lab"
+open_ports   = [8027, 22]
