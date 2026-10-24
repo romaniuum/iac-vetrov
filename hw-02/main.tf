@@ -26,7 +26,7 @@ data "yandex_compute_image" "os" {
 resource "yandex_compute_instance" "web" {
   # По варианту 2 машины. Номер машины входит в её адрес в состоянии
   # (web[0], web[1]), поэтому при уменьшении count удаляется последняя.
-      count = 2
+  count = 2
 
   name        = "vetrov-09-hw2-web-${count.index + 1}"
   hostname    = "vetrov-09-hw2-web-${count.index + 1}"
