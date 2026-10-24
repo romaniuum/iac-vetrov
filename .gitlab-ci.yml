@@ -77,3 +77,47 @@ stend-p2:
     - export PATH=/usr/local/bin:$PATH
     - echo "Уборка стенда, префикс $PREFIX"
     - bash work-02/destroy.sh
+
+# заготовка для Terraform: точка входа образа — сам terraform, а провайдер
+# берём с зеркала Яндекса, реестр HashiCorp отсюда недоступен
+.terraform:
+  image:
+    name: hashicorp/terraform:1.15.8
+    entrypoint: [""]
+  rules:
+    - if: $CI_PIPELINE_SOURCE == "push"
+      changes:
+        - "**/*.tf"
+        - "**/.terraform.lock.hcl"
+        - .gitlab-ci.yml
+  before_script:
+    - |
+      cat > /tmp/terraformrc <<'TFRC'
+      provider_installation {
+        network_mirror {
+          url     = "https://terraform-mirror.yandexcloud.net/"
+          include = ["registry.terraform.io/*/*"]
+        }
+        direct {
+          exclude = ["registry.terraform.io/*/*"]
+        }
+      }
+      TFRC
+    - export TF_CLI_CONFIG_FILE=/tmp/terraformrc
+
+terraform-fmt:
+  extends: .terraform
+  stage: proverka
+  script:
+    - echo "Формат манифестов, вариант 09, слово cloudlab"
+    - terraform version
+    - terraform fmt -check -diff -recursive
+
+# -backend=false: ставим провайдер, состояние для проверки не нужно
+terraform-validate:
+  extends: .terraform
+  stage: proverka
+  script:
+    - echo "Разбор манифеста hw-02, вариант 09, слово cloudlab"
+    - terraform -chdir=hw-02 init -backend=false -input=false
+    - terraform -chdir=hw-02 validate
