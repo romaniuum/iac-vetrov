@@ -1,0 +1,11 @@
+prefix         = "vetrov-09"
+zone           = "ru-central1-d"
+subnet_cidr    = "10.19.1.0/24"
+app_port       = 8027
+disk_size      = 25
+vm_count       = 2
+image_family   = "debian-12"
+greeting       = "cloudlab"
+env            = "lab"
+open_ports     = [8027, 22]
+ssh_public_key = "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAID7hq/KoShnLcJ6XTCqvzk5sVIPaxbY39QuUNhPNEHw8 vetrov-09"
