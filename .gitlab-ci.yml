@@ -2,10 +2,11 @@
 default:
   tags:
     - vetrov-09
-
 stages:
   - proverka
   - stend
+  - plan
+  - apply
 
 # не запускать, если менялась только документация
 shellcheck:
@@ -121,3 +122,40 @@ terraform-validate:
     - echo "Разбор манифеста hw-02, вариант 09, слово cloudlab"
     - terraform -chdir=hw-02 init -backend=false -input=false
     - terraform -chdir=hw-02 validate
+.tf-state:
+  image:
+    name: hashicorp/terraform:1.15.8
+    entrypoint: [""]
+  before_script:
+    - cd work-06
+    - export YC_SERVICE_ACCOUNT_KEY_FILE="$YC_KEY_LAB"
+    - |
+      cat > /tmp/terraformrc <<EOF
+      provider_installation {
+        network_mirror { url = "https://terraform-mirror.yandexcloud.net/"
+                         include = ["registry.terraform.io/*/*"] }
+        direct { exclude = ["registry.terraform.io/*/*"] }
+      }
+      EOF
+    - export TF_CLI_CONFIG_FILE=/tmp/terraformrc
+    - terraform init -input=false
+
+plan:
+  extends: .tf-state
+  stage: plan
+  script:
+    - terraform plan -input=false -out=plan.tfplan
+    - terraform show -no-color plan.tfplan
+  artifacts:
+    paths:
+      - work-06/plan.tfplan
+    expire_in: 1 day
+
+apply:
+  extends: .tf-state
+  stage: apply
+  when: manual
+  allow_failure: false
+  resource_group: vetrov-09-stend
+  script:
+    - terraform apply -input=false plan.tfplan
