@@ -1,0 +1,47 @@
+HTTP/1.1 200 OK
+Server: nginx/1.24.0 (Ubuntu)
+Date: Tue, 17 Nov 2026 11:39:53 GMT
+Content-Type: text/html; charset=utf-8
+Content-Length: 307
+Last-Modified: Tue, 17 Nov 2026 11:39:48 GMT
+Connection: keep-alive
+ETag: "6afc3d04-133"
+X-Iac-Config: managed-v1
+Accept-Ranges: bytes
+
+<!doctype html>
+<html lang="ru">
+<head><meta charset="utf-8"><title>vetrov-09</title></head>
+<body>
+<h1>cloudlab</h1>
+<p>Префикс: vetrov-09</p>
+<p>Окружение: lab</p>
+<p>Узел: web-1</p>
+<p>Системное имя узла: vetrov-09-web-1</p>
+<p>Редакция: 1</p>
+</body>
+</html>
+
+HTTP/1.1 200 OK
+Server: nginx/1.24.0 (Ubuntu)
+Date: Tue, 17 Nov 2026 11:39:53 GMT
+Content-Type: text/html; charset=utf-8
+Content-Length: 307
+Last-Modified: Tue, 17 Nov 2026 11:39:48 GMT
+Connection: keep-alive
+ETag: "6afc3d04-133"
+X-Iac-Config: managed-v1
+Accept-Ranges: bytes
+
+<!doctype html>
+<html lang="ru">
+<head><meta charset="utf-8"><title>vetrov-09</title></head>
+<body>
+<h1>cloudlab</h1>
+<p>Префикс: vetrov-09</p>
+<p>Окружение: lab</p>
+<p>Узел: web-2</p>
+<p>Системное имя узла: vetrov-09-web-2</p>
+<p>Редакция: 1</p>
+</body>
+</html>

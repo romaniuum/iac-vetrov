@@ -1,0 +1,46 @@
+ansible [core 2.16.3]
+  config file = /home/roman/iac-vetrov/work-07/ansible.cfg
+  configured module search path = ['/home/roman/.ansible/plugins/modules', '/usr/share/ansible/plugins/modules']
+  ansible python module location = /usr/lib/python3/dist-packages/ansible
+  ansible collection location = /home/roman/.ansible/collections:/usr/share/ansible/collections
+  executable location = /usr/bin/ansible
+  python version = 3.12.3 (main, Aug 31 2026, 10:18:26) [GCC 13.3.0] (/usr/bin/python3)
+  jinja version = 3.1.2
+  libyaml = True
+@all:
+  |--@ungrouped:
+  |--@web:
+  |  |--web-1
+  |  |--web-2
+web-1 | SUCCESS => {
+    "changed": false,
+    "ping": "pong"
+}
+web-2 | SUCCESS => {
+    "changed": false,
+    "ping": "pong"
+}
+web-1 | SUCCESS => {
+    "ansible_facts": {
+        "ansible_distribution": "Ubuntu",
+        "ansible_distribution_file_parsed": true,
+        "ansible_distribution_file_path": "/etc/os-release",
+        "ansible_distribution_file_variety": "Debian",
+        "ansible_distribution_major_version": "24",
+        "ansible_distribution_release": "noble",
+        "ansible_distribution_version": "24.04"
+    },
+    "changed": false
+}
+web-1 | SUCCESS => {
+    "ansible_facts": {
+        "ansible_hostname": "vetrov-09-web-1"
+    },
+    "changed": false
+}
+web-2 | SUCCESS => {
+    "ansible_facts": {
+        "ansible_hostname": "vetrov-09-web-2"
+    },
+    "changed": false
+}

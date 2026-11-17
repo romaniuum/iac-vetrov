@@ -1,0 +1,15 @@
+[0m[1myandex_compute_instance.web["web-2"]: Destroying... [id=fv44nm36k8i69h9qs96r][0m[0m
+[0m[1myandex_compute_instance.web["web-1"]: Destroying... [id=fv48n82vh5kqtd9iuuvi][0m[0m
+[0m[1myandex_compute_instance.web["web-1"]: Still destroying... [id=fv48n82vh5kqtd9iuuvi, 00m10s elapsed][0m[0m
+[0m[1myandex_compute_instance.web["web-2"]: Still destroying... [id=fv44nm36k8i69h9qs96r, 00m10s elapsed][0m[0m
+[0m[1myandex_compute_instance.web["web-2"]: Still destroying... [id=fv44nm36k8i69h9qs96r, 00m20s elapsed][0m[0m
+[0m[1myandex_compute_instance.web["web-1"]: Still destroying... [id=fv48n82vh5kqtd9iuuvi, 00m20s elapsed][0m[0m
+[0m[1myandex_compute_instance.web["web-1"]: Destruction complete after 30s[0m
+[0m[1myandex_compute_instance.web["web-2"]: Still destroying... [id=fv44nm36k8i69h9qs96r, 00m30s elapsed][0m[0m
+[0m[1myandex_compute_instance.web["web-2"]: Destruction complete after 31s[0m
+[0m[1myandex_vpc_subnet.subnet: Destroying... [id=fl8kuuunhs6qdf04if3f][0m[0m
+[0m[1myandex_vpc_security_group.web: Destroying... [id=enpg1tddpctt5s0c7in3][0m[0m
+[0m[1myandex_vpc_security_group.web: Destruction complete after 1s[0m
+[0m[1myandex_vpc_subnet.subnet: Destruction complete after 6s[0m
+[0m[1m[32m
+Apply complete! Resources: 0 added, 0 changed, 4 destroyed.[0m
