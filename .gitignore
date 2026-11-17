@@ -15,3 +15,9 @@ work-02/cloud-init.yaml
 .terraform/
 # значения с секретами
 *.auto.tfvars
+
+**/.terraform/
+
+*.tfplan
+
+sa-key.json

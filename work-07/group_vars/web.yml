@@ -1,0 +1,5 @@
+prefix: vetrov-09
+app_port: 8027
+greeting: cloudlab
+env: lab
+page_revision: "2"

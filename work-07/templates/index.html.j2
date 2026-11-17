@@ -1,0 +1,12 @@
+<!doctype html>
+<html lang="ru">
+<head><meta charset="utf-8"><title>{{ prefix | e }}</title></head>
+<body>
+<h1>{{ greeting | e }}</h1>
+<p>Префикс: {{ prefix | e }}</p>
+<p>Окружение: {{ env | e }}</p>
+<p>Узел: {{ inventory_hostname | e }}</p>
+<p>Системное имя узла: {{ ansible_facts['hostname'] | e }}</p>
+<p>Редакция: {{ page_revision | e }}</p>
+</body>
+</html>
